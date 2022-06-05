@@ -1,0 +1,34 @@
+.progressContainer {
+	display: flex;
+	position: relative;
+	flex-flow: row nowrap;
+	margin: 2rem auto;
+	min-height: 1.5rem;
+	width: 100%;
+	border-bottom: 2px solid black;
+}
+
+#mousetrack {
+	display: inline-block;
+	width: calc(100% - 44px);
+}
+
+#mouse {
+	/* Inline-block necessary for scaling */
+	display: inline-block;
+
+	/* Mirrors mouse emoji horizontally */
+	transform: scaleX(-1);
+
+	position: relative;
+}
+
+#cheese {
+	margin-left: 22px;
+}
+
+#party {
+	display: inline-block;
+	position: absolute;
+	left: 100%;
+}

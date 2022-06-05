@@ -1,0 +1,50 @@
+form {
+	width: 100%;
+}
+
+.inputContainer {
+	display: flex;
+	flex-direction: row;
+	gap: 0.3rem;
+}
+
+#hintBtn {
+	font-size: 0.75rem;
+	min-width: 2rem;
+	min-height: 1rem;
+}
+
+#answer {
+	line-height: 1.5;
+	padding: 0.5rem;
+	width: 100%;
+}
+
+.redBorder {
+	border: 1px solid red;
+	border-radius: 0.25rem;
+	box-shadow: 0 0 0.3rem red;
+}
+
+#inputValidityFeedback {
+	visibility: hidden;
+	position: relative;
+	top: -0.2rem;
+	left: 0.5rem;
+	text-align: left;
+	color: red;
+	font-size: 0.6rem;
+	font-weight: bold;
+}
+
+.visible {
+	visibility: visible !important;
+}
+
+#submitBtn {
+	display: block;
+	margin: auto;
+	padding: 0.5rem;
+	margin-bottom: 1rem;
+	width: clamp(75px, 30%, 150px);
+}

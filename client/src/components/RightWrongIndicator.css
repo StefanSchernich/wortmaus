@@ -1,0 +1,21 @@
+.rightWrongIndicator {
+	visibility: hidden;
+	margin: 3rem auto;
+	width: clamp(150px, 69vw, 500px);
+	text-align: center;
+	padding: 0.5rem;
+	border-radius: 1rem;
+	font-weight: bold;
+}
+
+.right {
+	visibility: visible;
+	background-color: lightgreen;
+	color: darkgreen;
+}
+
+.wrong {
+	visibility: visible;
+	background-color: pink;
+	color: red;
+}

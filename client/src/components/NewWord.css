@@ -1,0 +1,40 @@
+#newWordSection {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+h3 {
+	text-align: center;
+}
+
+.newWordForm {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	gap: 0.5rem;
+}
+
+#input {
+	line-height: 1.5;
+	padding: 0.5rem;
+	width: clamp(200px, 75%, 800px);
+}
+
+.addFeedback {
+	width: clamp(200px, 85%, 800px);
+	margin: 1rem auto;
+	padding: 1rem;
+	text-align: center;
+	font-weight: bold;
+	border-radius: 1rem;
+}
+.addSuccess {
+	background-color: lightgreen;
+	color: green;
+}
+
+.addFail {
+	background-color: pink;
+	color: red;
+}
