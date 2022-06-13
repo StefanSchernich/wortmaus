@@ -66,9 +66,7 @@ export default function App() {
 		const isCorrect = checkAnswer(suggestion, correctTranslation.current);
 		if (isCorrect) {
 			setMousePosition((prevMousePosition) => prevMousePosition + 2);
-		} else {
-			setMousePosition((prevMousePosition) => prevMousePosition - 2);
-		}
+		} // TODO: fix commit message: Mouse cannot move to negative X
 		setAnswerIsCorrect(isCorrect);
 
 		// Reset input field and get next word
@@ -98,7 +96,6 @@ export default function App() {
 		}
 
 		getTranslation(word);
-		console.log("Triggered setting of correctTranslation in useEffect!");
 	}, [selectedLanguage, word]);
 
 	// Event-Listener für "Enter"

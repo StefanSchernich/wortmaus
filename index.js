@@ -15,21 +15,24 @@ mongoose
 	.then(() => console.log("Successfully connected to Wortmaus DB"))
 	.catch((err) => console.error(err));
 
+// SCHEMA
 const wordSchema = new mongoose.Schema({
 	word: { type: String, required: true, unique: true },
+	en: [String],
+	fr: [String],
 });
 
+// MODEL
 const Word = mongoose.model("Word", wordSchema);
 
 // GOOGLE TRANSLATE API
-
 const projectId = "elliptical-rite-351613";
 const CREDS = JSON.parse(process.env.GOOGLE_CREDENTIALS);
 
 // Imports the Google Cloud client library
 const { Translate } = require("@google-cloud/translate").v2;
 
-// Instantiates a client
+// Instantiates a new Google Translation client
 const translate = new Translate({
 	projectId,
 	credentials: CREDS,
@@ -51,7 +54,6 @@ async function translateTo(source, targetLanguage) {
 }
 
 // ROUTES
-
 app.get("/getWord", async (req, res) => {
 	const count = await Word.count();
 	// console.log(`count: ${count}`)
@@ -63,10 +65,23 @@ app.get("/getWord", async (req, res) => {
 });
 
 app.post("/translate", async (req, res) => {
-	console.log("body", req.body);
+	// console.log("body", req.body);
 	const { word, selectedLanguage } = req.body;
+
+	// Check if there is already a translation in MongoDB.
+	const wordDoc = await Word.findOne({ word }).exec();
+	// console.log(wordDoc);
+	// If yes, return first entry
+	if (wordDoc[selectedLanguage].length) {
+		// console.log(`translation exists in DB: ${wordDoc[selectedLanguage][0]}`);
+		return res.json({ translation: wordDoc[selectedLanguage][0] });
+	}
+
+	// If not, get translation from google and return it. Also, add translation to DB
 	const translation = await translateTo(word, selectedLanguage);
-	console.log(`word: ${word}, selectedLangugage: ${selectedLanguage}, Google translation: ${translation}`);
+	const updatedWordDocument = await Word.findOneAndUpdate({ word }, { $push: { [selectedLanguage]: translation } }, { new: true });
+	// console.log({ updatedWord });
+	// console.log(`word: ${word}, selectedLangugage: ${selectedLanguage}, Google translation: ${translation}`);
 	return res.json({ translation });
 });
 
@@ -88,3 +103,9 @@ app.listen(PORT, () => {
   working directory is ${process.cwd()}`
 	);
 });
+
+/*
+TODO:
+  1. Add double-check functionality
+  2. Add you own translation
+*/
