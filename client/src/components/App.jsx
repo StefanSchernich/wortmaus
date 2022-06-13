@@ -62,11 +62,24 @@ export default function App() {
 		const suggestion = userTranslation.trim();
 		// console.log(`sent for checking: ${suggestion}`)
 
-		// Check if answer is correct (= user suggestion matches Google translation)
-		const isCorrect = checkAnswer(suggestion, correctTranslation.current);
+		// Check if answer is correct (= user suggestion matches DB / Google translation)
+		let isCorrect = checkAnswer(suggestion, correctTranslation.current);
+
+		// Double check if first DB/Google Translation does not match
+		if (!isCorrect) {
+			const {
+				data: { reverseTranslation },
+			} = await axios.post("/doubleCheck", { word, suggestion });
+			// console.log({ reverseTranslation });
+
+			if (checkAnswer(reverseTranslation, word)) {
+				isCorrect = true;
+			}
+		}
+
 		if (isCorrect) {
 			setMousePosition((prevMousePosition) => prevMousePosition + 2);
-		} // TODO: fix commit message: Mouse cannot move to negative X
+		}
 		setAnswerIsCorrect(isCorrect);
 
 		// Reset input field and get next word
@@ -116,8 +129,13 @@ export default function App() {
 		setWord(word);
 	}
 
+	/**
+	 * Returns true if provided strings match.
+	 * @param {string} suggestion
+	 * @param {string} correctTranslation
+	 * @returns Boolean
+	 */
 	function checkAnswer(suggestion, correctTranslation) {
-		console.log(correctTranslation);
 		return suggestion.toLowerCase() === correctTranslation.toLowerCase();
 	}
 

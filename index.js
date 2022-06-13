@@ -80,9 +80,16 @@ app.post("/translate", async (req, res) => {
 	// If not, get translation from google and return it. Also, add translation to DB
 	const translation = await translateTo(word, selectedLanguage);
 	const updatedWordDocument = await Word.findOneAndUpdate({ word }, { $push: { [selectedLanguage]: translation } }, { new: true });
-	// console.log({ updatedWord });
+	// console.log({ updatedWordDocument });
 	// console.log(`word: ${word}, selectedLangugage: ${selectedLanguage}, Google translation: ${translation}`);
 	return res.json({ translation });
+});
+
+app.post("/doubleCheck", async (req, res) => {
+	const { word, suggestion } = req.body;
+	const reverseTranslation = await translateTo(suggestion.trim(), "de");
+	// console.log({ reverseTranslation });
+	return res.json({ reverseTranslation });
 });
 
 app.post("/addWord", async (req, res) => {
