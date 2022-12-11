@@ -125,7 +125,7 @@ export default function App() {
 
 	// HELPER
 	async function getWord() {
-		const { data: word } = await axios.get("/getWord"); // Relative link possible because of 'proxy' in in package.json
+		const { data: word } = await axios.get("/getWord"); // Relative link possible because of 'proxy' in package.json
 		setWord(word);
 	}
 

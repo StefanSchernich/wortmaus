@@ -18,7 +18,7 @@ export default function NewWord(props) {
 	async function handleSubmit(event) {
 		event.preventDefault();
 		try {
-			if (!input) throw Error("Kein Input!");
+			if (!input || input === " " || /\W/.test(input)) throw Error("Ungültiger Input!");
 			const {
 				data: { addedWord },
 			} = await axios.post("/addWord", {

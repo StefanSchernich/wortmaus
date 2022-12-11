@@ -13,9 +13,6 @@ TODO.txt
 # testing
 /client/coverage
 
-# production
-/client/build
-
 # misc
 .env
 .env.local
